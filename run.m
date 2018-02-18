@@ -46,6 +46,12 @@ else
 	InputData.RoadGrade = 0;
 end
 
+if (SimSetup.TestDataFile == SimSetup.TestData4 | SimSetup.TestDataFile == SimSetup.TestData5 | SimSetup.TestDataFile == SimSetup.TestData6 | SimSetup.TestDataFile ==SimSetup.TestData7)
+	InputData.SampleRate = 0.02;
+else
+	InputData.SampleRate = 0.1;
+end
+
 SimSetup.StepSize = 0.1
 
 InputData.TestData = readtable(SimSetup.TestDataFile)
@@ -73,13 +79,165 @@ Ptrain.MaxTq=444; %Nm
 Ptrain.MaxPw=105000; %W
 Ptrain.Finaldrive=3.87;
 
-Ptrain.Motorspeed=0; %rps
-Ptrain.Transspeed=0; %rps
-Chassis.Vehiclespeed=0; %rpm
+InputData.TestData1 = readtable(SimSetup.TestData1);
+InputData.TestData2 = readtable(SimSetup.TestData2);
+InputData.TestData3 = readtable(SimSetup.TestData3);
+InputData.TestData4 = readtable(SimSetup.TestData4);
+InputData.TestData5 = readtable(SimSetup.TestData5);
+InputData.TestData6 = readtable(SimSetup.TestData6);
+InputData.TestData7 = readtable(SimSetup.TestData7);
+InputData.TestData8 = readtable(SimSetup.TestData8);
+InputData.TestData9 = readtable(SimSetup.TestData9);
+InputData.TestData10 = readtable(SimSetup.TestData10);
+InputData.TestData11 = readtable(SimSetup.TestData11);
 
-HVBattery.CellVoltMax=4.2;
-HVBattery.Series=16;
-HVBattery.Modules=6;
+ParamEx.Com1=[InputData.TestData1.HV_Battery_SOC___ InputData.TestData1.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com1,1):-1:1
+    y=2;
+    check=ParamEx.Com1(x,y);
+    if check<=250
+        ParamEx.Com1(x, :)=[];
+    end
+end
 
-sim('untitled.slx')
+ParamEx.Com2=[InputData.TestData2.HV_Battery_SOC___ InputData.TestData2.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com2,1):-1:1
+    y=2;
+    check=ParamEx.Com2(x,y);
+    if check<=250
+        ParamEx.Com2(x, :)=[];
+    end
+end
+
+ParamEx.Com3=[InputData.TestData3.HV_Battery_SOC___ InputData.TestData3.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com3,1):-1:1
+    y=2;
+    check=ParamEx.Com3(x,y);
+    if check<=250
+        ParamEx.Com3(x, :)=[];
+    end
+end
+
+ParamEx.Com4=[InputData.TestData4.HV_Battery_SOC___ InputData.TestData4.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com4,1):-1:1
+    y=2;
+    check=ParamEx.Com4(x,y);
+    if check<=250
+        ParamEx.Com4(x, :)=[];
+    end
+end
+
+ParamEx.Com5=[InputData.TestData5.HV_Battery_SOC___ InputData.TestData5.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com5,1):-1:1
+    y=2;
+    check=ParamEx.Com5(x,y);
+    if check<=250
+        ParamEx.Com5(x, :)=[];
+    end
+end
+
+ParamEx.Com6=[InputData.TestData6.HV_Battery_SOC___ InputData.TestData6.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com6,1):-1:1
+    y=2;
+    check=ParamEx.Com6(x,y);
+    if check<=250
+        ParamEx.Com6(x, :)=[];
+    end
+end
+
+ParamEx.Com7=[InputData.TestData7.HV_Battery_SOC___ InputData.TestData7.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com7,1):-1:1
+    y=2;
+    check=ParamEx.Com7(x,y);
+    if check<=250
+        ParamEx.Com7(x, :)=[];
+    end
+end
+
+ParamEx.Com8=[InputData.TestData8.HV_Battery_SOC___ InputData.TestData8.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com8,1):-1:1
+    y=2;
+    check=ParamEx.Com8(x,y);
+    if check<=250
+        ParamEx.Com8(x, :)=[];
+    end
+end
+
+ParamEx.Com9=[InputData.TestData9.HV_Battery_SOC___ InputData.TestData9.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com9,1):-1:1
+    y=2;
+    check=ParamEx.Com9(x,y);
+    if check<=250
+        ParamEx.Com9(x, :)=[];
+    end
+end
+
+ParamEx.Com10=[InputData.TestData10.HV_Battery_SOC___ InputData.TestData10.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com10,1):-1:1
+    y=2;
+    check=ParamEx.Com10(x,y);
+    if check<=250
+        ParamEx.Com10(x, :)=[];
+    end
+end
+
+ParamEx.Com11=[InputData.TestData11.HV_Battery_SOC___ InputData.TestData11.HV_Battery_Voltage_V_];
+for x =size(ParamEx.Com11,1):-1:1
+    y=2;
+    check=ParamEx.Com11(x,y);
+    if check<=250
+        ParamEx.Com11(x, :)=[];
+    end
+end
+
+Comparison=[ParamEx.Com1; ParamEx.Com2; ParamEx.Com3; ParamEx.Com4; ParamEx.Com5; ParamEx.Com6; ParamEx.Com7; ParamEx.Com8; ParamEx.Com9; ParamEx.Com10;ParamEx. Com11];
+
+x=Comparison(:,1);
+y=Comparison(:,2);
+f=fit(x,y,'fourier2');
+
+f=fit(x,y,'exp2');
+%plot(f,x,y);
+
+sim('untitled.slx');
+s
+scur=Outputcur.Data();
+svol=Outputvolt.Data();
+ssoc=Outputsoc.Data();
+
+if (SimSetup.TestDataFile == SimSetup.TestData4 | SimSetup.TestDataFile == SimSetup.TestData5 | SimSetup.TestDataFile == SimSetup.TestData6 | SimSetup.TestDataFile ==SimSetup.TestData7)
+    dcur=InputData.TestData.HV_Battery_Current_A_;
+    for i=1:1:500
+        dcur(1,:)=[];
+    end
+    dvol=InputData.TestData.HV_Battery_Voltage_V_;
+    for i=1:1:500
+        dvol(1,:)=[];
+    end
+    dsoc=InputData.TestData.HV_Battery_SOC___;
+    for i=1:1:500
+        dsoc(1,:)=[];
+    end
+else
+       dcur=InputData.TestData.HV_Battery_Current_A_;
+    for i=1:1:101
+        dcur(1,:)=[];
+    end
+    dvol=InputData.TestData.HV_Battery_Voltage_V_;
+    for i=1:1:101
+        dvol(1,:)=[];
+    end
+    dsoc=InputData.TestData.HV_Battery_SOC___;
+    for i=1:1:101
+        dsoc(1,:)=[];
+    end
+end
+    
+
+delcur=dcur-scur;
+delvol=dvol-svol;
+delsoc=dsoc-ssoc;
+errcur=sqrt(sum(delcur.^2)/Outputcur.length())
+errvol=sqrt(sum(delvol.^2)/Outputcur.length())
+errsoc=sqrt(sum(delsoc.^2)/Outputcur.length())
 
